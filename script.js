@@ -1,7 +1,5 @@
 const menuButton = document.querySelector(".menu-toggle");
 const navLinks = document.querySelector(".nav-links");
-const themeToggle = document.querySelector(".theme-toggle");
-const themeToggleText = document.querySelector(".theme-toggle-text");
 const stack = document.querySelector(".page-stack");
 const pages = Array.from(document.querySelectorAll(".page"));
 const navAnchors = Array.from(document.querySelectorAll(".nav-links a"));
@@ -11,35 +9,10 @@ const dotsContainer = document.querySelector(".page-dots");
 
 let activeIndex = 0;
 
-const storedTheme = localStorage.getItem("portfolio-theme");
-const preferredDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-const initialTheme = storedTheme || (preferredDark ? "dark" : "light");
-
-document.body.dataset.theme = initialTheme;
-
-const syncThemeButton = () => {
-  if (!themeToggle || !themeToggleText) {
-    return;
-  }
-
-  const isDark = document.body.dataset.theme === "dark";
-  themeToggle.setAttribute("aria-pressed", String(isDark));
-  themeToggleText.textContent = isDark ? "Light mode" : "Dark mode";
-};
-
 if (menuButton && navLinks) {
   menuButton.addEventListener("click", () => {
     const isOpen = navLinks.classList.toggle("is-open");
     menuButton.setAttribute("aria-expanded", String(isOpen));
-  });
-}
-
-if (themeToggle) {
-  themeToggle.addEventListener("click", () => {
-    const nextTheme = document.body.dataset.theme === "dark" ? "light" : "dark";
-    document.body.dataset.theme = nextTheme;
-    localStorage.setItem("portfolio-theme", nextTheme);
-    syncThemeButton();
   });
 }
 
@@ -151,4 +124,3 @@ window.addEventListener("keydown", (event) => {
 });
 
 setActiveState(0);
-syncThemeButton();
